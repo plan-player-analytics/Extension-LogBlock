@@ -31,11 +31,11 @@ import java.util.Optional;
  *
  * @author AuroraLS3
  */
-public class NewExtensionFactory {
+public class LogBlockExtensionFactory {
 
     private boolean isAvailable() {
         try {
-            Class.forName("");
+            Class.forName("de.diddiz.LogBlock.LogBlock");
             return true;
         } catch (ClassNotFoundException e) {
             return false;
@@ -44,7 +44,7 @@ public class NewExtensionFactory {
 
     public Optional<DataExtension> createExtension() {
         if (isAvailable()) {
-            return Optional.of(new NewExtension());
+            return Optional.of(new LogBlockExtension());
         }
         return Optional.empty();
     }
