@@ -22,6 +22,7 @@
 */
 package com.djrapitops.extension;
 
+import com.djrapitops.plan.extension.CallEvents;
 import com.djrapitops.plan.extension.DataExtension;
 import com.djrapitops.plan.extension.ElementOrder;
 import com.djrapitops.plan.extension.NotReadyException;
@@ -60,6 +61,11 @@ public class LogBlockExtension implements DataExtension {
 
     LogBlockExtension(boolean forTesting) {
         logblock = null;
+    }
+
+    @Override
+    public CallEvents[] callExtensionMethodsOn() {
+        return new CallEvents[]{CallEvents.PLAYER_LEAVE};
     }
 
     @DataBuilderProvider
