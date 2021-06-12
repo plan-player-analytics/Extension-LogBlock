@@ -37,11 +37,14 @@ import de.diddiz.LogBlock.LogBlock;
 import de.diddiz.LogBlock.QueryParams;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.World;
 
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * DataExtension.
@@ -54,6 +57,8 @@ import java.util.Collections;
 public class LogBlockExtension implements DataExtension {
 
     private final LogBlock logblock;
+
+    private final Set<String> skipWorlds = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     public LogBlockExtension() {
         logblock = (LogBlock) Bukkit.getPluginManager().getPlugin("LogBlock");
@@ -154,12 +159,22 @@ public class LogBlockExtension implements DataExtension {
     }
 
     private int getBrokenCount(String playerName, Material material) throws SQLException {
-        QueryParams params = new QueryParams(logblock);
-        params.setPlayer(playerName);
-        params.bct = QueryParams.BlockChangeType.DESTROYED;
-        params.limit = -1;
-        params.types = Collections.singletonList(material);
-        params.needCount = true;
-        return logblock.getCount(params);
+        int count = 0;
+        for (World world : Bukkit.getWorlds()) {
+            if (skipWorlds.contains(world.getName())) continue;
+            try {
+                QueryParams params = new QueryParams(logblock);
+                params.setPlayer(playerName);
+                params.bct = QueryParams.BlockChangeType.DESTROYED;
+                params.limit = -1;
+                params.types = Collections.singletonList(material);
+                params.needCount = true;
+                params.world = world;
+                count += logblock.getCount(params);
+            } catch (IllegalArgumentException worldIsNotLogged) {
+                skipWorlds.add(world.getName());
+            }
+        }
+        return count;
     }
 }
