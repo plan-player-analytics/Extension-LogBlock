@@ -140,13 +140,23 @@ public class LogBlockExtension implements DataExtension {
     }
 
     private int getBrokenStoneCount(String playerName) throws SQLException {
-        QueryParams params = new QueryParams(logblock);
-        params.setPlayer(playerName);
-        params.bct = QueryParams.BlockChangeType.DESTROYED;
-        params.limit = -1;
-        params.types = Arrays.asList(Material.STONE, Material.GRANITE, Material.ANDESITE, Material.DIORITE);
-        params.needCount = true;
-        return logblock.getCount(params);
+        int count = 0;
+        for (World world : Bukkit.getWorlds()) {
+            if (skipWorlds.contains(world.getName())) continue;
+            try {
+                QueryParams params = new QueryParams(logblock);
+                params.setPlayer(playerName);
+                params.bct = QueryParams.BlockChangeType.DESTROYED;
+                params.limit = -1;
+                params.types = Arrays.asList(Material.STONE, Material.GRANITE, Material.ANDESITE, Material.DIORITE);
+                params.needCount = true;
+                params.world = world;
+                count += logblock.getCount(params);
+            } catch (IllegalArgumentException worldIsNotLogged) {
+                skipWorlds.add(world.getName());
+            }
+        }
+        return count;
     }
 
     private int getBrokenCount(String playerName, String materialName) throws SQLException {
