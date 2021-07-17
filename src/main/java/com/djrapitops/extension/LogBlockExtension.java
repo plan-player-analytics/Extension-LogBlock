@@ -92,14 +92,16 @@ public class LogBlockExtension implements DataExtension {
 
             DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
-            double diamondToStoneRatio = diamonds * 1.0 / stoneBroken;
+            int divider = stoneBroken > 0 ? stoneBroken : 1;
+
+            double diamondToStoneRatio = diamonds * 1.0 / divider;
             table.addRow("Diamonds", diamonds, decimalFormat.format(diamondToStoneRatio));
-            table.addRow("Emeralds", emeralds, decimalFormat.format(emeralds * 1.0 / stoneBroken));
-            table.addRow("Redstone", redstone, decimalFormat.format(redstone * 1.0 / stoneBroken));
-            table.addRow("Lapis", lapis, decimalFormat.format(lapis * 1.0 / stoneBroken));
-            table.addRow("Iron", iron, decimalFormat.format(iron * 1.0 / stoneBroken));
-            table.addRow("Gold", gold, decimalFormat.format(gold * 1.0 / stoneBroken));
-            table.addRow("Coal", coal, decimalFormat.format(coal * 1.0 / stoneBroken));
+            table.addRow("Emeralds", emeralds, decimalFormat.format(emeralds * 1.0 / divider));
+            table.addRow("Redstone", redstone, decimalFormat.format(redstone * 1.0 / divider));
+            table.addRow("Lapis", lapis, decimalFormat.format(lapis * 1.0 / divider));
+            table.addRow("Iron", iron, decimalFormat.format(iron * 1.0 / divider));
+            table.addRow("Gold", gold, decimalFormat.format(gold * 1.0 / divider));
+            table.addRow("Coal", coal, decimalFormat.format(coal * 1.0 / divider));
 
             Table.Factory netherTable = Table.builder()
                     .columnOne("Ore", Icon.called("cube").build())
@@ -110,8 +112,10 @@ public class LogBlockExtension implements DataExtension {
             int netherGold = getBrokenCount(playerName, "NETHER_GOLD_ORE");
             int ancientDebris = getBrokenCount(playerName, "ANCIENT_DEBRIS");
 
-            netherTable.addRow("Nether Gold", netherGold, netherGold != -1 ? decimalFormat.format(netherGold * 1.0 / netherStone) : "Old version");
-            netherTable.addRow("Ancient Debris", ancientDebris, ancientDebris != -1 ? decimalFormat.format(ancientDebris * 1.0 / netherStone) : "Old version");
+            int netherDivider = netherStone > 0 ? netherStone : 1;
+
+            netherTable.addRow("Nether Gold", netherGold, netherGold != -1 ? decimalFormat.format(netherGold * 1.0 / netherDivider) : "Old version");
+            netherTable.addRow("Ancient Debris", ancientDebris, ancientDebris != -1 ? decimalFormat.format(ancientDebris * 1.0 / netherDivider) : "Old version");
 
             return newExtensionDataBuilder()
                     .addTable("ore_table", table.build(), Color.LIGHT_BLUE, "Overworld")
