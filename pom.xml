@@ -6,7 +6,7 @@
 
     <groupId>com.djrapitops</groupId>
     <artifactId>Extension-LogBlock</artifactId>
-    <version>1.16.1.2-R0.4</version>
+    <version>1.16.1.2-R0.5</version>
     <build>
         <plugins>
             <plugin>
@@ -53,14 +53,17 @@
             <id>plan-repo</id>
             <url>https://repo.playeranalytics.net/releases</url>
         </repository>
+        <repository>
+            <id>jitpack</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
         <dependency> <!-- Plan API -->
-            <groupId>com.djrapitops</groupId>
-            <artifactId>plan-api</artifactId>
-            <version>5.2-R0.5</version>
-            <scope>provided</scope>
+            <groupId>com.github.plan-player-analytics</groupId>
+            <artifactId>Plan</artifactId>
+            <version>5.4.1366</version>
         </dependency>
 
         <!-- Plugin API Dependency -->
