@@ -137,7 +137,7 @@ public class LogBlockExtension implements DataExtension {
                             .priority(100)
                             .showOnTab("Nether")
                             .icon(Icon.called("hammer").of(Color.BROWN).build())
-                            .buildNumber(stoneBroken));
+                            .buildNumber(netherStone));
         } catch (SQLException e) {
             throw new NotReadyException();
         }
