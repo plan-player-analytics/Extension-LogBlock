@@ -84,6 +84,24 @@ public class LogBlockExtension implements DataExtension {
             int iron = getBrokenCount(playerName, Material.IRON_ORE);
             int gold = getBrokenCount(playerName, Material.GOLD_ORE);
             int coal = getBrokenCount(playerName, Material.COAL_ORE);
+            
+            /*
+             * 1.17 DEEPSLATE ores and stones. Not using constants for backwards compatibility
+             */
+            try {
+                Material.valueOf("DEEPSLATE_DIAMOND_ORE"); // to force the IllegalArgument Exception, on pre MC 1.17
+                stoneBroken+=getBrokenCount(playerName, "DEEPSLATE");
+                stoneBroken+=getBrokenCount(playerName, "TUFF");
+                diamonds+=getBrokenCount(playerName, "DEEPSLATE_DIAMOND_ORE");
+                emeralds+=getBrokenCount(playerName, "DEEPSLATE_EMERALD_ORE");
+                redstone+=getBrokenCount(playerName, "DEEPSLATE_REDSTONE_ORE");
+                lapis+=getBrokenCount(playerName, "DEEPSLATE_LAPIS_ORE");
+                iron+=getBrokenCount(playerName, "DEEPSLATE_IRON_ORE");
+                gold+=getBrokenCount(playerName, "DEEPSLATE_GOLD_ORE");
+                coal+=getBrokenCount(playerName, "DEEPSLATE_COAL_ORE");
+            } catch (IllegalArgumentException e) {
+                // ignore (pre Minecraft 1.17, has no DEEPSLATE-Stuff)
+            }
 
             Table.Factory table = Table.builder()
                     .columnOne("Ore", Icon.called("cube").build())
