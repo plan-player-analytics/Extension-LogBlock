@@ -6,7 +6,7 @@
 
     <groupId>com.djrapitops</groupId>
     <artifactId>Extension-LogBlock</artifactId>
-    <version>1.16.1.2-R0.8</version>
+    <version>1.16.1.2-R0.9</version>
     <build>
         <plugins>
             <plugin>
