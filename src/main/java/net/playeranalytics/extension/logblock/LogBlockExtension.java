@@ -112,14 +112,14 @@ public class LogBlockExtension implements DataExtension {
 
             int divider = stoneBroken > 0 ? stoneBroken : 1;
 
-            double diamondToStoneRatio = diamonds * 1.0 / divider;
+            double diamondToStoneRatio = diamonds * 100.0 / divider;
             table.addRow("Diamonds", diamonds, decimalFormat.format(diamondToStoneRatio));
-            table.addRow("Emeralds", emeralds, decimalFormat.format(emeralds * 1.0 / divider));
-            table.addRow("Redstone", redstone, decimalFormat.format(redstone * 1.0 / divider));
-            table.addRow("Lapis", lapis, decimalFormat.format(lapis * 1.0 / divider));
-            table.addRow("Iron", iron, decimalFormat.format(iron * 1.0 / divider));
-            table.addRow("Gold", gold, decimalFormat.format(gold * 1.0 / divider));
-            table.addRow("Coal", coal, decimalFormat.format(coal * 1.0 / divider));
+            table.addRow("Emeralds", emeralds, decimalFormat.format(emeralds * 100.0 / divider));
+            table.addRow("Redstone", redstone, decimalFormat.format(redstone * 100.0 / divider));
+            table.addRow("Lapis", lapis, decimalFormat.format(lapis * 100.0 / divider));
+            table.addRow("Iron", iron, decimalFormat.format(iron * 100.0 / divider));
+            table.addRow("Gold", gold, decimalFormat.format(gold * 100.0 / divider));
+            table.addRow("Coal", coal, decimalFormat.format(coal * 100.0 / divider));
 
             Table.Factory netherTable = Table.builder()
                     .columnOne("Ore", Icon.called("cube").build())
@@ -132,8 +132,8 @@ public class LogBlockExtension implements DataExtension {
 
             int netherDivider = netherStone > 0 ? netherStone : 1;
 
-            netherTable.addRow("Nether Gold", netherGold, netherGold != -1 ? decimalFormat.format(netherGold * 1.0 / netherDivider) : "Old version");
-            netherTable.addRow("Ancient Debris", ancientDebris, ancientDebris != -1 ? decimalFormat.format(ancientDebris * 1.0 / netherDivider) : "Old version");
+            netherTable.addRow("Nether Gold", netherGold, netherGold != -1 ? decimalFormat.format(netherGold * 100.0 / netherDivider) : "Old version");
+            netherTable.addRow("Ancient Debris", ancientDebris, ancientDebris != -1 ? decimalFormat.format(ancientDebris * 100.0 / netherDivider) : "Old version");
 
             return newExtensionDataBuilder()
                     .addTable("ore_table", table.build(), Color.LIGHT_BLUE, "Overworld")
@@ -143,7 +143,7 @@ public class LogBlockExtension implements DataExtension {
                             .showOnTab("Overworld")
                             .icon(Icon.called("gem").of(Color.CYAN).build())
                             .showInPlayerTable()
-                            .buildDouble(diamondToStoneRatio))
+                            .buildDouble(diamondToStoneRatio!=0?100.0/diamondToStoneRatio:0))
                     .addValue(Long.class, valueBuilder("Stone broken")
                             .description("How many stone blocks the player has broken")
                             .priority(100)
