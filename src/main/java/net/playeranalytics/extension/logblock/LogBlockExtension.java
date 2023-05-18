@@ -143,7 +143,7 @@ public class LogBlockExtension implements DataExtension {
                             .showOnTab("Overworld")
                             .icon(Icon.called("gem").of(Color.CYAN).build())
                             .showInPlayerTable()
-                            .buildDouble((diamondToStoneRatio!=0?100.0/diamondToStoneRatio:0))
+                            .buildDouble(diamondToStoneRatio!=0?100.0/diamondToStoneRatio:0))
                     .addValue(Long.class, valueBuilder("Stone broken")
                             .description("How many stone blocks the player has broken")
                             .priority(100)
